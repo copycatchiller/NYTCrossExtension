@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NYT Crossword++ – Settings</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      color: #222;
+      background: #fff;
+      padding: 28px 32px;
+      min-width: 360px;
+      max-width: 480px;
+    }
+
+    h1 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 28px;
+      letter-spacing: -0.3px;
+    }
+
+    section { margin-bottom: 32px; }
+
+    h2 {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #999;
+      margin-bottom: 14px;
+    }
+
+    /* ── Color picker row ── */
+    .color-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    #colorPicker {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 52px;
+      height: 52px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 3px;
+      cursor: pointer;
+      background: none;
+      flex-shrink: 0;
+    }
+    #colorPicker::-webkit-color-swatch-wrapper { padding: 0; }
+    #colorPicker::-webkit-color-swatch { border: none; border-radius: 7px; }
+
+    .rgb-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    .rgb-field {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .rgb-field label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #aaa;
+      letter-spacing: 0.05em;
+    }
+
+    .rgb-field input[type="number"] {
+      width: 58px;
+      padding: 7px 6px;
+      border: 1px solid #e0e0e0;
+      border-radius: 7px;
+      font-size: 14px;
+      text-align: center;
+      color: #222;
+      outline: none;
+    }
+    .rgb-field input[type="number"]:focus {
+      border-color: #888;
+    }
+
+    /* ── Preview ── */
+    .preview {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      background: #f5f5f5;
+      border-radius: 10px;
+    }
+
+    .preview-label {
+      font-size: 12px;
+      color: #aaa;
+      flex-shrink: 0;
+    }
+
+    #previewText {
+      font-size: 22px;
+      font-weight: 700;
+      font-family: 'Georgia', 'Times New Roman', serif;
+      letter-spacing: 4px;
+    }
+
+    /* ── Shortcuts table ── */
+    .shortcut-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 11px 0;
+      border-bottom: 1px solid #f2f2f2;
+    }
+    .shortcut-row:last-child { border-bottom: none; }
+    .shortcut-desc { color: #444; }
+
+    .key-capture {
+      padding: 4px 14px;
+      min-width: 90px;
+      background: #f4f4f4;
+      border: 1px solid #ccc;
+      border-bottom-width: 2px;
+      border-radius: 5px;
+      font-size: 13px;
+      font-family: ui-monospace, 'SF Mono', monospace;
+      color: #333;
+      cursor: pointer;
+      text-align: center;
+      transition: background 0.1s, border-color 0.1s;
+    }
+    .key-capture:hover { background: #ebebeb; }
+    .key-capture.capturing {
+      background: #fff8e1;
+      border-color: #f0a500;
+      color: #7a5000;
+    }
+
+    .shortcut-hint {
+      font-size: 12px;
+      color: #bbb;
+      margin-top: 10px;
+    }
+
+    /* ── Actions ── */
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    #saveBtn {
+      padding: 10px 24px;
+      background: #111;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    #saveBtn:hover { background: #333; }
+
+    #resetBtn {
+      padding: 10px 16px;
+      background: none;
+      color: #888;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    #resetBtn:hover { color: #333; border-color: #aaa; }
+
+    #statusMsg {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #2a9e2a;
+      min-height: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h1>NYT Crossword++</h1>
+
+  <section>
+    <h2>Pencil Letter Color</h2>
+    <div class="color-row">
+      <input type="color" id="colorPicker" value="#FF69B4">
+      <div class="rgb-group">
+        <div class="rgb-field">
+          <label for="rInput">R</label>
+          <input type="number" id="rInput" min="0" max="255">
+        </div>
+        <div class="rgb-field">
+          <label for="gInput">G</label>
+          <input type="number" id="gInput" min="0" max="255">
+        </div>
+        <div class="rgb-field">
+          <label for="bInput">B</label>
+          <input type="number" id="bInput" min="0" max="255">
+        </div>
+      </div>
+    </div>
+    <div class="preview">
+      <span class="preview-label">Preview</span>
+      <span id="previewText">ABC</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Keyboard Shortcuts</h2>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Toggle Pencil Mode</span>
+      <button class="key-capture" id="pencilKeyBtn" data-setting="pencilKey">.</button>
+    </div>
+    <div class="shortcut-row">
+      <span class="shortcut-desc">Rebus Mode (hold)</span>
+      <button class="key-capture" id="rebusKeyBtn" data-setting="rebusKey">⌥ Alt</button>
+    </div>
+    <p class="shortcut-hint">Click a key to change it, then press the new key.<br>Rebus only accepts modifier keys (Alt, Shift, Ctrl).</p>
+  </section>
+
+  <div class="actions">
+    <button id="saveBtn">Save</button>
+    <button id="resetBtn">Reset to Default</button>
+  </div>
+  <div id="statusMsg"></div>
+
+  <script src="options.js"></script>
+</body>
+</html>
