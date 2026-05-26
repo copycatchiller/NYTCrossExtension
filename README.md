@@ -7,6 +7,5 @@ Improve your crossword solving experience on NYT Games!
 
 Works on the Daily, Midi, and Mini puzzles.
 
-**Privacy Policy:
-**
+**Privacy Policy:**
 This extension collects no user data and does not sell or share anything with 3rd parties.
